@@ -118,3 +118,26 @@ function handleKeyPress(event) {
 document.addEventListener('keydown', handleKeyPress);
 
 initGrid();
+document.getElementById("up").addEventListener("click", () => handleMove("ArrowUp"));
+document.getElementById("down").addEventListener("click", () => handleMove("ArrowDown"));
+document.getElementById("left").addEventListener("click", () => handleMove("ArrowLeft"));
+document.getElementById("right").addEventListener("click", () => handleMove("ArrowRight"));
+
+function handleMove(direction) {
+    let moved = false;
+    if (direction === "ArrowLeft") {
+        moved = moveLeft();
+    } else if (direction === "ArrowRight") {
+        moved = moveRight();
+    } else if (direction === "ArrowUp") {
+        moved = moveUp();
+    } else if (direction === "ArrowDown") {
+        moved = moveDown();
+    }
+
+    if (moved) {
+        addRandomTile();
+        updateGrid();
+        scoreElement.textContent = score;
+    }
+}
