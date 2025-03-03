@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2048 - Telegram Mini App</title>
     <link rel="stylesheet" href="static/style.css">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="static/favicon.png">
 
-    <!-- Meta-теги для Telegram Mini App -->
     <meta name="theme-color" content="#faf8ef">
     <meta property="og:title" content="2048 - Telegram Mini App">
     <meta property="og:description" content="Играй в 2048 прямо в Telegram!">
@@ -22,9 +19,18 @@
         <div class="score-container">
             <p>Счёт: <span id="score">0</span></p>
         </div>
+
+        <!-- Кнопки управления -->
+        <div class="controls">
+            <button id="up">⬆️</button>
+            <div>
+                <button id="left">⬅️</button>
+                <button id="down">⬇️</button>
+                <button id="right">➡️</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Подключаем JavaScript с атрибутом defer -->
     <script src="static/script.js" defer></script>
 </body>
 </html>
