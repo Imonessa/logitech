@@ -118,10 +118,10 @@ function handleKeyPress(event) {
 document.addEventListener('keydown', handleKeyPress);
 
 initGrid();
-document.getElementById("up").addEventListener("click", () => handleMove("Up"));
-document.getElementById("down").addEventListener("click", () => handleMove("Down"));
-document.getElementById("left").addEventListener("click", () => handleMove("Left"));
-document.getElementById("right").addEventListener("click", () => handleMove("Right"));
+document.getElementById("up").addEventListener("click", () => handleMove("ArrowUp"));
+document.getElementById("down").addEventListener("click", () => handleMove("ArrowDown"));
+document.getElementById("left").addEventListener("click", () => handleMove("ArrowLeft"));
+document.getElementById("right").addEventListener("click", () => handleMove("ArrowRight"));
 
 function handleMove(direction) {
     let moved = false;
