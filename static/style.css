@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #faf8ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-container {
+    text-align: center;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.grid-cell {
+    width: 100px;
+    height: 100px;
+    background-color: #d1c0b4;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.grid-cell[data-value="2"] {
+    background-color: #eee4da;
+}
+
+.grid-cell[data-value="4"] {
+    background-color: #ede0c8;
+}
+
+.grid-cell[data-value="8"] {
+    background-color: #f2b179;
+}
+
+.grid-cell[data-value="16"] {
+    background-color: #f59563;
+}
+
+.grid-cell[data-value="32"] {
+    background-color: #f67c5f;
+}
+
+.grid-cell[data-value="64"] {
+    background-color: #f65e3b;
+}
+
+.grid-cell[data-value="128"] {
+    background-color: #edcf72;
+}
+
+.grid-cell[data-value="256"] {
+    background-color: #edcc61;
+}
+
+.grid-cell[data-value="512"] {
+    background-color: #edc850;
+}
+
+.grid-cell[data-value="1024"] {
+    background-color: #edc53f;
+}
+
+.grid-cell[data-value="2048"] {
+    background-color: #edc22e;
+}
+
+.score-container {
+    font-size: 1.5rem;
+}
