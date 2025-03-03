@@ -6,13 +6,7 @@ let grid = [];
 let score = 0;
 
 function initGrid() {
-    grid = [];
-    for (let i = 0; i < size; i++) {
-        grid[i] = [];
-        for (let j = 0; j < size; j++) {
-            grid[i][j] = 0;
-        }
-    }
+    grid = Array.from({ length: size }, () => Array(size).fill(0));
     addRandomTile();
     addRandomTile();
     updateGrid();
@@ -31,6 +25,7 @@ function updateGrid() {
             gridContainer.appendChild(cell);
         }
     }
+    scoreElement.textContent = score;
 }
 
 function addRandomTile() {
@@ -44,29 +39,33 @@ function addRandomTile() {
     }
 
     if (emptyTiles.length > 0) {
-        const randomTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
-        grid[randomTile.i][randomTile.j] = Math.random() < 0.9 ? 2 : 4;
+        const { i, j } = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+        grid[i][j] = Math.random() < 0.9 ? 2 : 4;
     }
+}
+
+function compress(row) {
+    return row.filter(num => num !== 0).concat(Array(size).fill(0)).slice(0, size);
+}
+
+function merge(row) {
+    for (let i = 0; i < size - 1; i++) {
+        if (row[i] !== 0 && row[i] === row[i + 1]) {
+            row[i] *= 2;
+            score += row[i];
+            row[i + 1] = 0;
+        }
+    }
+    return row;
 }
 
 function moveLeft() {
     let moved = false;
     for (let i = 0; i < size; i++) {
-        let row = grid[i].filter(x => x !== 0);
-        let newRow = [];
-        for (let j = 0; j < row.length; j++) {
-            if (row[j] === row[j + 1]) {
-                newRow.push(row[j] * 2);
-                score += row[j] * 2;
-                j++;
-            } else {
-                newRow.push(row[j]);
-            }
-        }
-        while (newRow.length < size) {
-            newRow.push(0);
-        }
-        if (JSON.stringify(newRow) !== JSON.stringify(grid[i])) {
+        let newRow = compress(grid[i]); 
+        newRow = merge(newRow);
+        newRow = compress(newRow);
+        if (JSON.stringify(grid[i]) !== JSON.stringify(newRow)) {
             moved = true;
         }
         grid[i] = newRow;
@@ -81,44 +80,38 @@ function moveRight() {
     return moved;
 }
 
+function rotateGrid(times = 1) {
+    for (let t = 0; t < times; t++) {
+        grid = grid[0].map((_, colIndex) => grid.map(row => row[colIndex])).reverse();
+    }
+}
+
 function moveUp() {
-    grid = rotateGrid(grid);
+    rotateGrid(1);
     let moved = moveLeft();
-    grid = rotateGrid(grid);
-    grid = rotateGrid(grid);
-    grid = rotateGrid(grid);
+    rotateGrid(3);
     return moved;
 }
 
 function moveDown() {
-    grid = rotateGrid(grid);
-    let moved = moveRight();
-    grid = rotateGrid(grid);
-    grid = rotateGrid(grid);
-    grid = rotateGrid(grid);
+    rotateGrid(3);
+    let moved = moveLeft();
+    rotateGrid(1);
     return moved;
-}
-
-function rotateGrid(grid) {
-    return grid[0].map((_, colIndex) => grid.map(row => row[colIndex]));
 }
 
 function handleKeyPress(event) {
     let moved = false;
-    if (event.key === 'ArrowLeft') {
-        moved = moveLeft();
-    } else if (event.key === 'ArrowRight') {
-        moved = moveRight();
-    } else if (event.key === 'ArrowUp') {
-        moved = moveUp();
-    } else if (event.key === 'ArrowDown') {
-        moved = moveDown();
+    switch (event.key) {
+        case 'ArrowLeft': moved = moveLeft(); break;
+        case 'ArrowRight': moved = moveRight(); break;
+        case 'ArrowUp': moved = moveUp(); break;
+        case 'ArrowDown': moved = moveDown(); break;
     }
 
     if (moved) {
         addRandomTile();
         updateGrid();
-        scoreElement.textContent = score;
     }
 }
 
